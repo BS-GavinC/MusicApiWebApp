@@ -17,6 +17,12 @@ require('express-async-errors')
 // Execution du serveur express et recuperation de l'app
 const app = express();
 
+const db = require('./models');
+
+db.sequelize.authenticate()
+    .then(() => console.log('Ca a marché copain !'))
+    .catch(() => console.log('CPT'))
+
 // Mise en place du middleware de routing qui redirige les requete avec '/api' vers notre router 🛣️
 app.use('/api', router);
 
