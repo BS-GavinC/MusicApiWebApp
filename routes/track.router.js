@@ -1,3 +1,4 @@
+const trackController = require('../controllers/track.controller');
 
 const trackRouter = require('express').Router();
 
@@ -5,12 +6,12 @@ const trackRouter = require('express').Router();
 // nous allons etre redirigé dans nos controllers
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
 trackRouter.route('/')
-    .get((req, res) => {res.sendStatus(501)})
-    .post((req, res) => {res.sendStatus(501)})
+    .get(trackController.getAll)
+    .post(trackController.create)
 
 trackRouter.route('/:id')
-    .get((req, res) => {res.sendStatus(501)})
-    .put((req, res) => {res.sendStatus(501)})
-    .delete((req, res) => {res.sendStatus(501)})
+    .get(trackController.getById)
+    .put(trackController.update)
+    .delete(trackController.delete)
 
 module.exports = trackRouter;

@@ -1,16 +1,18 @@
+const artistController = require('../controllers/artist.controller');
+
 const artistRouter = require('express').Router();
 
 // Ici nous checkons les routes et leur verb HTTP pour determiner vers quel methodes
 // nous allons etre redirigé dans nos controllers
-// ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
+// ex : /api/genre/1 en GET renvoi vers genreController.GetById
 artistRouter.route('/')
-    .get((req, res) => {res.sendStatus(501)})
-    .post((req, res) => {res.sendStatus(501)})
+    .get(artistController.getAll)
+    .post(artistController.create)
 
 artistRouter.route('/:id')
-    .get((req, res) => {res.sendStatus(501)})
-    .put((req, res) => {res.sendStatus(501)})
-    .delete((req, res) => {res.sendStatus(501)})
+    .get(artistController.getById)
+    .put(artistController.update)
+    .delete(artistController.delete)
 
 
 module.exports = artistRouter;

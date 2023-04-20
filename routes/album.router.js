@@ -1,4 +1,5 @@
 const { response } = require('express');
+const albumController = require('../controllers/album.controller');
 
 const albumRouter = require('express').Router();
 
@@ -6,12 +7,12 @@ const albumRouter = require('express').Router();
 // nous allons etre redirigé dans nos controllers
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
 albumRouter.route('/')
-    .get((req, res) => {res.sendStatus(501)})
-    .post((req, res) => {res.sendStatus(501)})
+    .get(albumController.getAll)
+    .post(albumController.create)
 
 albumRouter.route('/:id')
-    .get((req, res) => {res.sendStatus(501)})
-    .put((req, res) => {res.sendStatus(501)})
-    .delete((req, res) => {res.sendStatus(501)})
+    .get(albumController.getById)
+    .put(albumController.update)
+    .delete(albumController.delete)
 
 module.exports = albumRouter;
