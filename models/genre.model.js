@@ -15,6 +15,7 @@ module.exports = (sequelize) => {
         }
     },
     {
+        //Le nom par defaut sera le nom du model au pluriel sauf si nous l'explicitons ici.
         tableName : 'Genre',
 
         timestamps : false

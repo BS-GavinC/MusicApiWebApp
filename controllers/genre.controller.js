@@ -1,4 +1,5 @@
-const {response, request} = require('express')
+const {response, request} = require('express');
+const genreService = require('../services/genre.service');
 
 const genreController = {
     /**
@@ -6,8 +7,12 @@ const genreController = {
      * @param {request} req 
      * @param {response} res 
      */
-    getAll : (req, res) => {
-        res.sendStatus(501);
+    getAll : async (req, res) => {
+        
+        const genres = await genreService.getAll()
+
+        res.status(200).json(genres);
+
     },
 
 
@@ -16,8 +21,28 @@ const genreController = {
      * @param {request} req 
      * @param {response} res 
      */
-    create : (req, res) => {
-        res.sendStatus(501);
+    create : async (req, res) => {
+        
+        const data = req.body;
+
+        // const alreadyExist = await genreService.alreadyExist(data.name)
+
+        // if (alreadyExist) {
+        //     res.sendStatus(400)
+        //     return;
+        // }
+
+        const genre = await genreService.create(data);
+
+        if (!genre) {
+            res.sendStatus(400)
+            return;
+        }
+
+        res.location('/genre/' + genre.id)
+
+        res.status(201).json(genre)
+
     },
 
     /**
@@ -25,8 +50,17 @@ const genreController = {
      * @param {request} req 
      * @param {response} res 
      */
-    getById : (req, res) => {
-        res.sendStatus(501);
+    getById : async (req, res) => {
+        const genre = await genreService.getById(req.params.id)
+
+        if (!genre) {
+            res.sendStatus(400)
+            return;
+        }
+            res.status(200).json(genre)
+        
+        
+
     },
 
     /**
@@ -34,8 +68,18 @@ const genreController = {
      * @param {request} req 
      * @param {response} res 
      */
-    update : (req, res) => {
-        res.sendStatus(501);
+    update : async (req, res) => {
+
+        const alreadyExist = await genreService.alreadyExist(req.body.name)
+
+        if (alreadyExist) {
+            res.sendStatus(400)
+            return;
+        }
+            const isUpdate = await genreService.update(req.params.id, req.body);
+
+            isUpdate ? res.sendStatus(204) : res.sendStatus(400)
+        
     },
 
     /**
@@ -43,8 +87,18 @@ const genreController = {
      * @param {request} req 
      * @param {response} res 
      */
-    delete : (req, res) => {
-        res.sendStatus(501);
+    delete : async (req, res) => {
+        const isDelete = await genreService.delete(req.params.id)
+
+        if (!isDelete) {
+            res.sendStatus(400)
+        }
+        else
+        {
+            res.sendStatus(204);
+        }
+
+        
     }
 }
 

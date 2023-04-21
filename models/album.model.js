@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
             type : DataTypes.STRING
         }
     }
-    // Par defaut le tableName est egal au ModelName => ici 'Album'
+    // Par defaut le tableName est egal au ModelName avec un 's' => ici 'Albums'
     )
 
 
