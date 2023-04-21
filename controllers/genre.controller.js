@@ -25,12 +25,12 @@ const genreController = {
         
         const data = req.body;
 
-        // const alreadyExist = await genreService.alreadyExist(data.name)
+        const alreadyExist = await genreService.alreadyExist(data.name)
 
-        // if (alreadyExist) {
-        //     res.sendStatus(400)
-        //     return;
-        // }
+        if (alreadyExist) {
+            res.sendStatus(400)
+            return;
+        }
 
         const genre = await genreService.create(data);
 
