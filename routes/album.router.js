@@ -1,4 +1,4 @@
-const { response } = require('express');
+
 const albumController = require('../controllers/album.controller');
 
 const albumRouter = require('express').Router();

@@ -3,11 +3,12 @@ const {response, request} = require('express')
 const trackController = {
     /**
      * Recupere tout les tracks
-     * @param {request} req 
-     * @param {response} res 
+     * @param {request} req
+     * @param {response} res
      */
     getAll : (req, res) => {
-        res.sendStatus(501);
+        res.sendStatus(501)
+
     },
 
 

@@ -9,6 +9,7 @@ trackRouter.route('/')
     .get(trackController.getAll)
     .post(trackController.create)
 
+
 trackRouter.route('/:id')
     .get(trackController.getById)
     .put(trackController.update)
