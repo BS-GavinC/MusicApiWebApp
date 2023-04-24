@@ -1,4 +1,5 @@
-const {response, request} = require('express')
+const {response, request} = require('express');
+const albumService = require('../services/album.service');
 
 const albumController = {
 
@@ -8,8 +9,10 @@ const albumController = {
      * @param {request} req 
      * @param {response} res 
      */
-    getAll : (req, res) => {
-        res.sendStatus(501);
+    getAll : async (req, res) => {
+        const albums = await albumService.getAll();
+
+        res.status(200).json(albums)
     },
 
 
@@ -18,8 +21,20 @@ const albumController = {
      * @param {request} req 
      * @param {response} res 
      */
-    create : (req, res) => {
-        res.sendStatus(501);
+    create : async (req, res) => {
+        const data = req.body;
+
+        const album = await albumService.create(data);
+
+        if (!album) {
+            res.sendStatus(400);
+            return;
+        }
+
+        res.location('/album/' + album.id)
+
+        res.status(201).json(album)
+
     },
 
     /**
@@ -27,8 +42,17 @@ const albumController = {
      * @param {request} req 
      * @param {response} res 
      */
-    getById : (req, res) => {
-        res.sendStatus(501);
+    getById : async (req, res) => {
+        const id = req.params.id;
+
+        const album = await albumService.getById(id);
+
+        if (!album) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.status(200).json(album);
     },
 
     /**
@@ -36,8 +60,11 @@ const albumController = {
      * @param {request} req 
      * @param {response} res 
      */
-    update : (req, res) => {
-        res.sendStatus(501);
+    update : async (req, res) => {
+        const id = req.params.id;
+        const data = req.body;
+
+        res.sendStatus(await albumService.update(id, data) ? 204 : 400);
     },
 
     /**
@@ -45,8 +72,9 @@ const albumController = {
      * @param {request} req 
      * @param {response} res 
      */
-    delete : (req, res) => {
-        res.sendStatus(501);
+    delete : async (req, res) => {
+        const id = req.params.id;
+        res.sendStatus(await albumService.delete(id) ? 204 : 400);
     }
 
 }
