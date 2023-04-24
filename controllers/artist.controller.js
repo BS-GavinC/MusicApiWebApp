@@ -1,6 +1,7 @@
 const {response, request} = require('express');
 const { get } = require('../routes');
 const artistService = require('../services/artist.service');
+const { successArrayResponse, successResponse } = require('../utils/success.response');
 
 const artistController = {
 
@@ -11,9 +12,9 @@ const artistController = {
      * @param {response} res 
      */
     getAll : async (req, res) => {
-        const artists = await artistService.getAll();
+        const {artists, count} = await artistService.getAll();
 
-        res.status(200).json(artists)
+        res.status(200).json(new successArrayResponse(artists, count))
     },
 
 
@@ -37,7 +38,7 @@ const artistController = {
             return; 
         }
 
-        res.status(201).json(artist)
+        res.status(201).json(new successResponse(artist, 201))
     },
 
     /**
@@ -54,7 +55,7 @@ const artistController = {
             res.sendStatus(404);
             return;
         }
-        res.status(200).json(artist)
+        res.status(200).json(new successResponse(artist))
     },
 
     /**

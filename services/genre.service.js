@@ -12,12 +12,21 @@ const genreService = {
     // Obtenir tous les genres de la base de données
     getAll : async () => {
 
-
         // Récupère tous les genres de la base de données
-        const genres = await db.Genre.findAll();
+        //const genres = await db.Genre.findAll();
+
+        const {rows, count} = await db.Genre.findAndCountAll();
 
         // Renvoie les genres sous forme d'objets genre DTO
-        return genres.map(genre => new genreDTO(genre))
+        //return genres.map(genre => new genreDTO(genre))
+
+        return {
+            genres : rows.map(genre => new genreDTO(genre)),
+            count : count
+        }
+
+        
+
     },
     // Obtenir un seul genre par son ID
     getById : async (id) => {

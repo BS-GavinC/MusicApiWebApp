@@ -1,5 +1,6 @@
 const {response, request} = require('express');
 const genreService = require('../services/genre.service');
+const {successArrayResponse, successResponse} = require('../utils/success.response');
 
 const genreController = {
     /**
@@ -9,9 +10,9 @@ const genreController = {
      */
     getAll : async (req, res) => {
         
-        const genres = await genreService.getAll()
+        const {genres, count} = await genreService.getAll()
 
-        res.status(200).json(genres);
+        res.status(200).json(new successArrayResponse(genres, count));
 
     },
 
@@ -41,7 +42,7 @@ const genreController = {
 
         res.location('/genre/' + genre.id)
 
-        res.status(201).json(genre)
+        res.status(201).json(new successResponse(genre, 201))
 
     },
 
@@ -57,7 +58,7 @@ const genreController = {
             res.sendStatus(404)
             return;
         }
-            res.status(200).json(genre)
+            res.status(200).json(new successResponse(genre))
         
         
 

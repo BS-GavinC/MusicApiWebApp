@@ -5,9 +5,12 @@ const db = require("../models");
 const trackService = {
 
     getAll : async () => {
-        const tracks = await db.Track.findAll();
+        const {rows, count} = await db.Track.findAndCountAll();
 
-        return tracks.map(t => new trackDTO(t))
+        return {
+            tracks : rows.map(track => new trackDTO(track)),
+            count : count
+        }
     },
 
     getById : async (id) => {

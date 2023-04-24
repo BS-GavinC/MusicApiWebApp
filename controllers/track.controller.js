@@ -1,5 +1,6 @@
 const {response, request} = require('express');
 const trackService = require('../services/track.service');
+const { successArrayResponse, successResponse } = require('../utils/success.response');
 
 const trackController = {
     /**
@@ -8,9 +9,9 @@ const trackController = {
      * @param {response} res
      */
     getAll : async (req, res) => {
-        const tracks = await trackService.getAll();
+        const {tracks, count} = await trackService.getAll();
 
-        res.status(200).json(tracks)
+        res.status(200).json(new successArrayResponse(tracks, count))
 
     },
 
@@ -30,7 +31,7 @@ const trackController = {
             return;
         }
 
-        res.status(201).json(track)
+        res.status(201).json(new successResponse(track, 201))
 
     },
 
@@ -49,7 +50,7 @@ const trackController = {
             return;
         }
 
-        res.status(200).json(track)
+        res.status(200).json(new successResponse(track))
     },
 
     /**

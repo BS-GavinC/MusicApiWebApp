@@ -9,6 +9,7 @@ const {PORT} = process.env;
 
 // Import de express 
 const express = require('express');
+const pagination = require('./middlewares/pagination.middleware');
 
 // Mise en place de la gestion d'erreur d'express 
 require('express-async-errors')
@@ -36,8 +37,13 @@ db.sequelize.authenticate()
 //Import de notre dossier routes et de router dans 'index.js' 🍣
 const router = require('./routes')
 
+
 // Mise en place du middleware de routing qui redirige les requete avec '/api' vers notre router 🛣️
 app.use('/api', router);
+
+
+
+
 
 app.use((err, req, res, next) => {
     

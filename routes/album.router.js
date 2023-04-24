@@ -1,5 +1,6 @@
 
 const albumController = require('../controllers/album.controller');
+const pagination = require('../middlewares/pagination.middleware');
 
 const albumRouter = require('express').Router();
 
@@ -7,7 +8,7 @@ const albumRouter = require('express').Router();
 // nous allons etre redirigé dans nos controllers
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
 albumRouter.route('/')
-    .get(albumController.getAll)
+    .get(pagination({defaultLimit : 5, maxLimit : 10}), albumController.getAll)
     .post(albumController.create)
 
 albumRouter.route('/:id')

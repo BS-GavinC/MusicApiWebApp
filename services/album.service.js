@@ -5,10 +5,17 @@ const db = require("../models");
 
 const albumService = {
 
-    getAll : async () => {
-        const albums = await db.Album.findAll();
+    getAll : async (limit, offset) => {
 
-        return albums.map(a => new albumDTO(a))
+        const {rows, count} = await db.Album.findAndCountAll({
+            limit : limit,
+            offset : offset
+        });
+
+        return {
+            albums : rows.map(album => new albumDTO(album)),
+            count : count
+        }
     },
 
     getById : async (id) => {

@@ -5,9 +5,12 @@ const db = require("../models");
 const artistService = {
 
     getAll : async () => {
-        const artists = await db.Artist.findAll();
+        const {rows, count} = await db.Artist.findAndCountAll();
 
-        return artists.map(artist => new artistDTO(artist))
+        return {
+            artists : rows.map(artist => new artistDTO(artist)),
+            count : count
+        }
     },
 
     getById : async (id) => {

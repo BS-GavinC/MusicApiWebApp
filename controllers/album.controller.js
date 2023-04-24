@@ -1,5 +1,6 @@
 const {response, request} = require('express');
 const albumService = require('../services/album.service');
+const { successResponse, successArrayResponse } = require('../utils/success.response');
 
 const albumController = {
 
@@ -10,9 +11,12 @@ const albumController = {
      * @param {response} res 
      */
     getAll : async (req, res) => {
-        const albums = await albumService.getAll();
 
-        res.status(200).json(albums)
+        const {limit, offset} = req.pagination
+
+        const {albums, count} = await albumService.getAll(limit , offset);
+
+        res.status(200).json(new successArrayResponse(albums, count))
     },
 
 
@@ -33,7 +37,7 @@ const albumController = {
 
         res.location('/album/' + album.id)
 
-        res.status(201).json(album)
+        res.status(201).json(new successResponse(album, 201))
 
     },
 
@@ -52,7 +56,7 @@ const albumController = {
             return;
         }
 
-        res.status(200).json(album);
+        res.status(200).json(new successResponse(album));
     },
 
     /**
