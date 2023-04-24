@@ -54,7 +54,7 @@ const genreController = {
         const genre = await genreService.getById(req.params.id)
 
         if (!genre) {
-            res.sendStatus(400)
+            res.sendStatus(404)
             return;
         }
             res.status(200).json(genre)
@@ -76,9 +76,9 @@ const genreController = {
             res.sendStatus(400)
             return;
         }
-            const isUpdate = await genreService.update(req.params.id, req.body);
+        const isUpdate = await genreService.update(req.params.id, req.body);
 
-            isUpdate ? res.sendStatus(204) : res.sendStatus(400)
+        isUpdate ? res.sendStatus(204) : res.sendStatus(400)
         
     },
 
