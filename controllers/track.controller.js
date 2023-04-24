@@ -1,4 +1,5 @@
-const {response, request} = require('express')
+const {response, request} = require('express');
+const trackService = require('../services/track.service');
 
 const trackController = {
     /**
@@ -6,8 +7,10 @@ const trackController = {
      * @param {request} req
      * @param {response} res
      */
-    getAll : (req, res) => {
-        res.sendStatus(501)
+    getAll : async (req, res) => {
+        const tracks = await trackService.getAll();
+
+        res.status(200).json(tracks)
 
     },
 
@@ -17,8 +20,18 @@ const trackController = {
      * @param {request} req 
      * @param {response} res 
      */
-    create : (req, res) => {
-        res.sendStatus(501);
+    create : async (req, res) => {
+        const data = req.body
+
+        const track = await trackService.create(data);
+
+        if (!track) {
+            res.sendStatus(400);
+            return;
+        }
+
+        res.status(201).json(track)
+
     },
 
     /**
@@ -26,8 +39,17 @@ const trackController = {
      * @param {request} req 
      * @param {response} res 
      */
-    getById : (req, res) => {
-        res.sendStatus(501);
+    getById : async (req, res) => {
+        const id = req.params.id;
+
+        const track = await trackService.getById(id);
+
+        if (!track) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.status(200).json(track)
     },
 
     /**
@@ -35,8 +57,11 @@ const trackController = {
      * @param {request} req 
      * @param {response} res 
      */
-    update : (req, res) => {
-        res.sendStatus(501);
+    update : async (req, res) => {
+        const id = req.params.id;
+        const data = req.body;
+
+        res.sendStatus(await trackService.update(id, data) ? 204 : 400)
     },
 
     /**
@@ -44,8 +69,10 @@ const trackController = {
      * @param {request} req 
      * @param {response} res 
      */
-    delete : (req, res) => {
-        res.sendStatus(501);
+    delete : async (req, res) => {
+        const id = req.params.id;
+
+        res.sendStatus(await trackService.delete(id) ? 204 : 400)
     }
 }
 
