@@ -14,9 +14,19 @@ const albumController = {
 
         const {limit, offset} = req.pagination
 
+        // const {limit, offset} = req.query
+
+        // if (!limit || limit > 25 || limit <= 0) {
+        //     limit = 25
+        // }
+
+        // if (!offset || offset < 0) {
+        //     offset = 0
+        // }
+
         const {albums, count} = await albumService.getAll(limit , offset);
 
-        res.status(200).json(new successArrayResponse(albums, count))
+        res.status(200).json(new successArrayResponse(albums, count, req))
     },
 
 
@@ -27,6 +37,7 @@ const albumController = {
      */
     create : async (req, res) => {
         const data = req.body;
+
 
         const album = await albumService.create(data);
 
@@ -48,6 +59,8 @@ const albumController = {
      */
     getById : async (req, res) => {
         const id = req.params.id;
+
+        
 
         const album = await albumService.getById(id);
 

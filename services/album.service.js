@@ -20,6 +20,7 @@ const albumService = {
 
     getById : async (id) => {
 
+        
         const album = await db.Album.findByPk(id);
 
         return album ? new albumDTO(album) : null;

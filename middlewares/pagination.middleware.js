@@ -16,10 +16,11 @@ const pagination = (options) => {
     return (req, res, next) => {
 
         const reqOffset = parseInt(req.query.offset); // NaN
-        const reqLimit = parseInt(req.query.limit)
+        const reqLimit = parseInt(req.query.limit);
 
         const offset = (isNaN(reqOffset) || reqOffset < 0) ? 0 : reqOffset
         const limit = (isNaN(reqLimit) || reqLimit <= 0) ? defaultLimit : Math.min(reqLimit, maxLimit)
+
 
         req.pagination = {offset, limit}
 

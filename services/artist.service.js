@@ -17,6 +17,8 @@ const artistService = {
 
         const artist = await db.Artist.findByPk(id);
 
+        
+
         return artist ? new artistDTO(artist) : null;
 
     },

@@ -15,7 +15,7 @@ const trackService = {
 
     getById : async (id) => {
         const track = await db.Track.findByPk(id);
-
+        
         return track ? new trackDTO(track) : null;
     },
 

@@ -8,7 +8,7 @@ const albumRouter = require('express').Router();
 // nous allons etre redirigé dans nos controllers
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
 albumRouter.route('/')
-    .get(pagination({defaultLimit : 5, maxLimit : 10}), albumController.getAll)
+    .get(pagination({maxLimit : 20, defaultLimit : 10}), albumController.getAll)
     .post(albumController.create)
 
 albumRouter.route('/:id')
