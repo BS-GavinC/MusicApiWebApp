@@ -35,7 +35,8 @@ db.sequelize.authenticate()
 // db.sequelize.sync({alter : {drop : false}})
 
 //Import de notre dossier routes et de router dans 'index.js' 🍣
-const router = require('./routes')
+const router = require('./routes');
+const errorResponse = require('./utils/error.response');
 
 
 // Mise en place du middleware de routing qui redirige les requete avec '/api' vers notre router 🛣️
@@ -44,10 +45,12 @@ app.use('/api', router);
 
 
 
-app.use((err, req, res, next) => {
+// app.use((err, req, res, next) => {
+
+//     const message = err.errors ? err.errors[0].message : "Erreur imprévue"
     
-    res.status(422).send({ error: err});
-  });
+//     res.status(422).send(new errorResponse(message, 422));
+//   });
 
 // Ecoute du serveur sur le port importé depuis l'environnement 🦻
 app.listen(PORT, () => {

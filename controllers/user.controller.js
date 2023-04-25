@@ -1,6 +1,7 @@
 const { Request, Response } = require("express");
 const userService = require("../services/user.service")
-const { successArrayResponse, successResponse } = require("../utils/success.response")
+const { successArrayResponse, successResponse } = require("../utils/success.response");
+const errorResponse = require("../utils/error.response");
 
 
 const userController = {
@@ -56,6 +57,13 @@ const userController = {
     update : async (req, res) => {
         const {id} = req.params;
         const data = req.body;
+
+        const user = userService.getById(id);
+
+        if (!data.email || (data.email != user.email && await userService.alreadyExist(data.email))) {
+            res.status(400).json(new errorResponse("L'email que vous essayez de modifier est deja utilisé."))
+            return;
+        }
 
         const isUpdated = await userService.update(id, data);
 

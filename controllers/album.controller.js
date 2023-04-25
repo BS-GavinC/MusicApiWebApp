@@ -1,6 +1,7 @@
 const {response, request} = require('express');
 const albumService = require('../services/album.service');
 const { successResponse, successArrayResponse } = require('../utils/success.response');
+const errorResponse = require('../utils/error.response');
 
 const albumController = {
 
@@ -42,7 +43,7 @@ const albumController = {
         const album = await albumService.create(data);
 
         if (!album) {
-            res.sendStatus(400);
+            res.sendStatus(400)
             return;
         }
 
@@ -60,12 +61,10 @@ const albumController = {
     getById : async (req, res) => {
         const id = req.params.id;
 
-        
-
         const album = await albumService.getById(id);
 
         if (!album) {
-            res.sendStatus(404);
+            res.status(404).json(new errorResponse(`Album ${id} introuvable.`, 404))
             return;
         }
 

@@ -37,12 +37,7 @@ const userService = {
 
     update : async (id, userToUpdate) => {
 
-        const user = await this.getById(id);
-
-        if (!userToUpdate.email || (userToUpdate.email != user.email && await this.alreadyExist(userToUpdate.email))) {
-            return null;
-        }
-
+        
         const updatedRows = await db.User.update(userToUpdate, {
             where : {id : id}
         })
@@ -50,7 +45,7 @@ const userService = {
         return updatedRows[0] === 1
     },
 
-    delete : async (deletedRows) => {
+    delete : async (id) => {
 
         const deletedRows = await db.User.destroy({
             where : {id : id}
