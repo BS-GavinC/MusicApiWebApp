@@ -9,9 +9,11 @@ const trackController = {
      * @param {response} res
      */
     getAll : async (req, res) => {
-        const {tracks, count} = await trackService.getAll();
 
-        res.status(200).json(new successArrayResponse(tracks, count))
+        const {limit, offset} = req.pagination
+        const {tracks, count} = await trackService.getAll(limit, offset);
+
+        res.status(200).json(new successArrayResponse(tracks, count, req))
 
     },
 

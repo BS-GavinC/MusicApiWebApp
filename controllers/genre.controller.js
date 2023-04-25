@@ -9,10 +9,12 @@ const genreController = {
      * @param {response} res 
      */
     getAll : async (req, res) => {
-        
-        const {genres, count} = await genreService.getAll()
 
-        res.status(200).json(new successArrayResponse(genres, count));
+        const {limit, offset} = req.pagination
+        
+        const {genres, count} = await genreService.getAll(limit, offset)
+
+        res.status(200).json(new successArrayResponse(genres, count, req));
 
     },
 

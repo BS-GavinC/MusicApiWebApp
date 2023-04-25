@@ -4,8 +4,11 @@ const db = require("../models");
 
 const artistService = {
 
-    getAll : async () => {
-        const {rows, count} = await db.Artist.findAndCountAll();
+    getAll : async (limit, offset) => {
+        const {rows, count} = await db.Artist.findAndCountAll({
+            limit : limit,
+            offset : offset
+        });
 
         return {
             artists : rows.map(artist => new artistDTO(artist)),

@@ -1,4 +1,5 @@
 const genreController = require('../controllers/genre.controller');
+const pagination = require('../middlewares/pagination.middleware');
 
 const genreRouter = require('express').Router();
 
@@ -6,7 +7,7 @@ const genreRouter = require('express').Router();
 // nous allons etre redirigé dans nos controllers
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
 genreRouter.route('/')
-    .get(genreController.getAll)
+    .get(pagination(), genreController.getAll)
     .post(genreController.create)
 
 genreRouter.route('/:id')

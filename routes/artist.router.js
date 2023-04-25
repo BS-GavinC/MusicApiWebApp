@@ -1,4 +1,5 @@
 const artistController = require('../controllers/artist.controller');
+const pagination = require('../middlewares/pagination.middleware');
 
 const artistRouter = require('express').Router();
 
@@ -6,7 +7,7 @@ const artistRouter = require('express').Router();
 // nous allons etre redirigé dans nos controllers
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById
 artistRouter.route('/')
-    .get(artistController.getAll)
+    .get(pagination(), artistController.getAll)
     .post(artistController.create)
 
 artistRouter.route('/:id')

@@ -12,9 +12,12 @@ const artistController = {
      * @param {response} res 
      */
     getAll : async (req, res) => {
-        const {artists, count} = await artistService.getAll();
 
-        res.status(200).json(new successArrayResponse(artists, count))
+        const {limit, offset} = req.pagination
+
+        const {artists, count} = await artistService.getAll(limit, offset);
+
+        res.status(200).json(new successArrayResponse(artists, count, req))
     },
 
 
