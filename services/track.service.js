@@ -17,15 +17,48 @@ const trackService = {
     },
 
     getById : async (id) => {
-        const track = await db.Track.findByPk(id);
+        const track = await db.Track.findByPk(id, {
+            include: [db.Genre, db.Album, db.Artist]
+        });
         
         return track ? new trackDTO(track) : null;
     },
 
     create : async (trackToAdd) => {
-        const track = await db.Track.create(trackToAdd);
+        let track;
+        const transaction = await db.sequelize.transaction();
 
-        return track ? new trackDTO(track) : null;
+        try {
+
+            track = await db.Track.create(trackToAdd, {transaction : transaction});
+
+            await track.addAlbum(trackToAdd.albums, {transaction : transaction});
+
+
+            // Definir la valeur d'une colonne de la table intermediaire.
+            for (const artist of trackToAdd.artists) {
+                await track.addArtist(artist.id, {through: {feat : artist.feat} , transaction : transaction})
+            }
+
+            // await track.addArtist(trackToAdd.artists, {transaction : transaction});
+
+            await transaction.commit()
+
+            const addedTrack = await db.Track.findByPk(track.id, {
+                include : [db.Genre, db.Artist, db.Album]
+            })
+
+            return addedTrack ? new trackDTO(addedTrack) : null
+            
+        } catch (error) {
+
+            console.log(error)
+
+            await transaction.rollback()
+
+            return null;
+        }
+        
     },
 
     update : async (id, trackToUpdate) => {
@@ -42,6 +75,41 @@ const trackService = {
         })
 
         return deletedRows === 1;
+    },
+
+    addArtist : async (trackId, artistToAdd) => {
+        try {
+
+            const track = await db.Track.findByPk(trackId);
+
+            await track.addArtist(artistToAdd.id, {through : {feat : artistToAdd.feat}})
+            
+            return true;
+
+        } catch (error) {
+
+            console.log(error)
+
+            return false;
+        }
+    },
+
+    removeArtist : async (trackId, artistId) => {
+        try {
+
+            const track = await db.Track.findByPk(trackId);
+
+            await track.removeArtist(artistId)
+            
+            return true;
+
+        } catch (error) {
+
+            console.log(error)
+
+            return false;
+        }
+
     }
 
 }
