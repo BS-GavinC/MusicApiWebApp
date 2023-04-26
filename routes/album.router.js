@@ -16,4 +16,8 @@ albumRouter.route('/:id')
     .put(albumController.update)
     .delete(albumController.delete)
 
+albumRouter.route('/:albumId/track/:trackId')
+    .post(albumController.addTrack)
+    .delete(albumController.removeTrack)
+
 module.exports = albumRouter;

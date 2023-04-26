@@ -94,6 +94,28 @@ const artistController = {
         const id = req.params.id;
 
         res.sendStatus(await artistService.delete(id) ? 204 : 400)
+    },
+
+    /**
+     * supprimer un artist par son id
+     * @param {request} req 
+     * @param {response} res 
+     */
+    addTrack : async (req, res) => {
+        const {artistId, trackId} = req.params;
+
+        res.sendStatus(await artistService.addTrack(artistId, trackId) ? 200 : 400)
+    },
+
+    /**
+     * supprimer un artist par son id
+     * @param {request} req 
+     * @param {response} res 
+     */
+    removeTrack : async (req, res) => {
+        const {artistId, trackId} = req.params;
+
+        res.sendStatus(await artistService.removeTrack(artistId, trackId) ? 200 : 400)
     }
 
 }

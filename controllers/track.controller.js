@@ -84,10 +84,10 @@ const trackController = {
      * @param {response} res 
      */
     addArtist : async (req, res) => {
-        const {id} = req.params;
+        const {trackId, artistId} = req.params;
         const data = req.body;
 
-        res.sendStatus(await trackService.addArtist(id, data) ? 200 : 400)
+        res.sendStatus(await trackService.addArtist(trackId, artistId, data) ? 200 : 400)
     },
 
     /**
@@ -99,6 +99,28 @@ const trackController = {
         const {trackId, artistId} = req.params;
 
         res.sendStatus(await trackService.removeArtist(trackId, artistId) ? 200 : 400)
+    },
+
+    /**
+     * supprimer un track par son id
+     * @param {request} req 
+     * @param {response} res 
+     */
+    addAlbum : async (req, res) => {
+        const {trackId, albumId} = req.params;
+
+        res.sendStatus(await trackService.addAlbum(trackId, albumId) ? 200 : 400)
+    },
+
+    /**
+     * supprimer un track par son id
+     * @param {request} req 
+     * @param {response} res 
+     */
+    removeAlbum : async (req, res) => {
+        const {trackId, albumId} = req.params;
+
+        res.sendStatus(await trackService.removeAlbum(trackId, albumId) ? 200 : 400)
     }
 }
 

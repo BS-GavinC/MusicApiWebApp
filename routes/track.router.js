@@ -15,9 +15,14 @@ trackRouter.route('/:id')
     .get(trackController.getById)
     .put(trackController.update)
     .delete(trackController.delete)
-    .post(trackController.addArtist)
+    
 //api/track/1/3
-trackRouter.route('/:trackId/:artistId')
+trackRouter.route('/:trackId/artist/:artistId')
     .delete(trackController.removeArtist)
+    .post(trackController.addArtist)
+
+trackRouter.route('/:trackId/album/:albumId')
+    .delete(trackController.removeAlbum)
+    .post(trackController.addAlbum)
 
 module.exports = trackRouter;

@@ -91,6 +91,28 @@ const albumController = {
     delete : async (req, res) => {
         const id = req.params.id;
         res.sendStatus(await albumService.delete(id) ? 204 : 400);
+    },
+
+    /**
+     * supprimer un album par son id
+     * @param {request} req 
+     * @param {response} res 
+     */
+    addTrack : async (req, res) => {
+        const {trackId, albumId} = req.params
+
+        res.sendStatus(await albumService.addTrack(albumId, trackId) ? 200 : 400)
+    },
+
+    /**
+     * supprimer un album par son id
+     * @param {request} req 
+     * @param {response} res 
+     */
+    removeTrack : async (req, res) => {
+        const {trackId, albumId} = req.params
+
+        res.sendStatus(await albumService.removeTrack(albumId, trackId) ? 200 : 400)
     }
 
 }

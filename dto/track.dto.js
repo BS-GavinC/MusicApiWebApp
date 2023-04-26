@@ -1,4 +1,5 @@
 const albumDTO = require("./album.dto");
+const albumTrackDTO = require("./album_track.dto");
 const artistTrackDTO = require("./artist_track.dto");
 
 class trackDTO{
@@ -7,7 +8,7 @@ class trackDTO{
         this.title = title;
         this.duration = duration;
         this.Genre = Genre;
-        this.Albums = Albums?.map( a => new albumDTO(a));
+        this.Albums = Albums?.map(album => new albumTrackDTO(album));
         this.Artists = Artists?.map(a => new artistTrackDTO(a))
     }
 }

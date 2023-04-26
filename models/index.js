@@ -38,6 +38,7 @@ db.Album.belongsToMany(db.Track, {through : 'MM_Album_Track'});
 db.Track.belongsToMany(db.Artist, {through : db.MM_Artist_Track});
 db.Artist.belongsToMany(db.Track, { through : db.MM_Artist_Track});
 
+
 db.User.belongsToMany(db.Track, {through : 'MM_User_Track'})
 db.Track.belongsToMany(db.User, {through : 'MM_User_Track'})
 

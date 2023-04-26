@@ -77,12 +77,12 @@ const trackService = {
         return deletedRows === 1;
     },
 
-    addArtist : async (trackId, artistToAdd) => {
+    addArtist : async (trackId, artistId, data) => {
         try {
 
             const track = await db.Track.findByPk(trackId);
 
-            await track.addArtist(artistToAdd.id, {through : {feat : artistToAdd.feat}})
+            await track.addArtist(artistId, {through : {feat : data?.feat}})
             
             return true;
 
@@ -100,6 +100,41 @@ const trackService = {
             const track = await db.Track.findByPk(trackId);
 
             await track.removeArtist(artistId)
+            
+            return true;
+
+        } catch (error) {
+
+            console.log(error)
+
+            return false;
+        }
+
+    },
+
+    addAlbum : async (trackId, albumId) => {
+        try {
+
+            const track = await db.Track.findByPk(trackId);
+
+            await track.addAlbum(albumId)
+            
+            return true;
+
+        } catch (error) {
+
+            console.log(error)
+
+            return false;
+        }
+    },
+
+    removeAlbum : async (trackId, albumId) => {
+        try {
+
+            const track = await db.Track.findByPk(trackId);
+
+            await track.removeAlbum(albumId)
             
             return true;
 

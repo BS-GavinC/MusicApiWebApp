@@ -18,7 +18,9 @@ const artistService = {
 
     getById : async (id) => {
 
-        const artist = await db.Artist.findByPk(id);
+        const artist = await db.Artist.findByPk(id, {
+            include : [db.Track]
+        });
 
         
 
@@ -52,6 +54,36 @@ const artistService = {
 
         return deletedRows === 1;
 
+    },
+
+    addTrack : async (artistId, trackId) => {
+
+        try {
+
+            const artist = await db.Artist.findByPk(artistId)
+
+            await artist.addTrack(trackId);
+
+            return true;
+            
+        } catch (error) {
+            return false;
+        }
+
+    },
+
+    removeTrack : async (artistId, trackId) => {
+        try {
+
+            const artist = await db.Artist.findByPk(artistId)
+
+            await artist.removeTrack(trackId);
+
+            return true;
+            
+        } catch (error) {
+            return false;
+        }
     }
 
 

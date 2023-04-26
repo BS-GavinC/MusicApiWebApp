@@ -15,5 +15,9 @@ artistRouter.route('/:id')
     .put(artistController.update)
     .delete(artistController.delete)
 
+artistRouter.route('/:artistId/track/:trackId')
+    .post(artistController.addTrack)
+    .delete(artistController.removeTrack)
+
 
 module.exports = artistRouter;
