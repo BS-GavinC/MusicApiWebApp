@@ -7,6 +7,7 @@ const { Sequelize, ModelStatic, DataTypes } = require("sequelize");
  * @returns {ModelStatic<any>}
  */
 module.exports = (sequelize) => {
+    
 
     const Album = sequelize.define('Album', 
     {

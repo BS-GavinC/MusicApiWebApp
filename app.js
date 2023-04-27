@@ -29,7 +29,7 @@ db.sequelize.authenticate()
     .catch((err) => console.log('CPT : ' + err))
  
 // Deconstruit et reconstruit la base de donnée
-// db.sequelize.sync({force : true})
+//db.sequelize.sync({force : true})
 
 //Update la base de donné sur base des modification sans drop les elements
 // db.sequelize.sync({alter : {drop : false}})

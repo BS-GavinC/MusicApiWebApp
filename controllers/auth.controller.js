@@ -1,6 +1,7 @@
 const authService = require("../services/auth.service");
 const userService = require("../services/user.service");
 const errorResponse = require("../utils/error.response");
+const jwt = require("../utils/jwt.utils");
 const { successResponse } = require("../utils/success.response");
 
 
@@ -21,7 +22,9 @@ const authController = {
             return;
         }
 
-        res.status(201).json(new successResponse(user, 201))
+        const token = await jwt.generate(user)
+
+        res.status(201).json(new successResponse({token, user}, 201))
     },
 
     login : async (req, res) => {
@@ -35,7 +38,9 @@ const authController = {
             return
         }
 
-        res.status(200).json(new successResponse(user))
+        const token = await jwt.generate(user)
+
+        res.status(200).json(new successResponse({user, token}))
     }
 
 }
