@@ -38,6 +38,10 @@ db.sequelize.authenticate()
 const router = require('./routes');
 const errorResponse = require('./utils/error.response');
 
+// app.use('/test', (req, res, next) => {
+//     console.log("MAIS NAN !")
+//     res.sendStatus(418)
+// })
 
 // Mise en place du middleware de routing qui redirige les requete avec '/api' vers notre router 🛣️
 app.use('/api', router);

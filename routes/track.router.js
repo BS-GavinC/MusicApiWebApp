@@ -1,5 +1,7 @@
 const trackController = require('../controllers/track.controller');
 const pagination = require('../middlewares/pagination.middleware');
+const bodyValidator = require('../middlewares/validator.middleware');
+const createTrackValidator = require('../validators/track.validator');
 
 const trackRouter = require('express').Router();
 
@@ -8,7 +10,7 @@ const trackRouter = require('express').Router();
 // ex : /api/genre/1 en GET renvoi vers genreController.GetById(id)
 trackRouter.route('/')
     .get(pagination(), trackController.getAll)
-    .post(trackController.create)
+    .post(bodyValidator(createTrackValidator) ,trackController.create)
 
 
 trackRouter.route('/:id')
